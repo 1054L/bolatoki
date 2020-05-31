@@ -1,0 +1,1 @@
+Error 404 personalizado<?php /**PATH C:\laragon\www\bolatoki\resources\views/errors/404.blade.php ENDPATH**/ ?>

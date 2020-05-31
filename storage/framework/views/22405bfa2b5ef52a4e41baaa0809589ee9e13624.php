@@ -1,0 +1,1 @@
+<input type="<?php echo e($type ?? text); ?>" class="inputClass"><?php /**PATH C:\laragon\www\bolatoki\resources\views/includes/input.blade.php ENDPATH**/ ?>
