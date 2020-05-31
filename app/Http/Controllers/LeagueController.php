@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SaveLeagueRequest;
 use App\Services\ClassificationService;
 use App\League;
+use App\LeagueMatch;
 use App\MatchPlayer;
 
 class LeagueController extends Controller
@@ -106,12 +107,11 @@ class LeagueController extends Controller
             $date = date('Y-M-d');
         }
         $league = new league();
-        // $classification = League::orderBy(
-        //     MatchPlayer::select('result')
-        //         ->whereColumn('match', $league->matches(), 'IN')
-        //         ->orderBy('result')
-        //     )->get();
-        //     dd($classification);
-        return view('index', compact('classification'));
+        $matches = LeagueMatch::get();
+        $result = array();
+        foreach ($matches as $match) {
+            $classifications = MatchPlayer::get()->where('match_id', $match->id);
+        }
+        return view('index', compact('classifications'));
     }
 }

@@ -12,6 +12,16 @@
                         </div>
                     @endif
                     @lang('Classification')
+                    <hr>
+                    <ul class="list-group">
+                        @forelse ($classifications as $classification)
+                            <li class="list-group-item border-0 mb-3 shadow-sm">
+                                <span class="font-weight-bold">{{ $classification->player_id }} ({{ $classification->result }})</span>
+                            </li>
+                        @empty
+                            <li>@lang('There are no entries for this table')</li>
+                        @endforelse
+                    </ul>
                 </div>
             </div>
         </div>

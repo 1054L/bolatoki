@@ -19,10 +19,6 @@ class ClassificationService
 
     public static function getClassification(array $matches, array $players)
     {
-        
-
-
-
         $linea = array();
         foreach ($matches as $key => $match) {
             $matchPlayers = $match->players();
