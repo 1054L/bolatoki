@@ -36,7 +36,7 @@ class Championship
     private ?Clasification $clasification = null;
 
     #[ORM\ManyToOne]
-    private ?pointformat $pointformat = null;
+    private ?Pointformat $pointformat = null;
 
     public function __construct()
     {
@@ -135,12 +135,12 @@ class Championship
         return $this;
     }
 
-    public function getPointformat(): ?pointformat
+    public function getPointformat(): ?Pointformat
     {
         return $this->pointformat;
     }
 
-    public function setPointformat(?pointformat $pointformat): static
+    public function setPointformat(?Pointformat $pointformat): static
     {
         $this->pointformat = $pointformat;
 

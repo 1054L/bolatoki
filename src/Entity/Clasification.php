@@ -20,9 +20,9 @@ class Clasification //Ignorar, en realidad se puede borrar!!
     private ?championship $championship = null;
 
     /**
-     * @var Collection<int, player>
+     * @var Collection<int, Player>
      */
-    #[ORM\ManyToMany(targetEntity: player::class, inversedBy: 'clasifications')]
+    #[ORM\ManyToMany(targetEntity: Player::class, inversedBy: 'clasifications')]
     private Collection $player;
 
     #[ORM\Column(nullable: true)]
@@ -51,14 +51,14 @@ class Clasification //Ignorar, en realidad se puede borrar!!
     }
 
     /**
-     * @return Collection<int, player>
+     * @return Collection<int, Player>
      */
     public function getPlayer(): Collection
     {
         return $this->player;
     }
 
-    public function addPlayer(player $player): static
+    public function addPlayer(Player $player): static
     {
         if (!$this->player->contains($player)) {
             $this->player->add($player);
@@ -67,7 +67,7 @@ class Clasification //Ignorar, en realidad se puede borrar!!
         return $this;
     }
 
-    public function removePlayer(player $player): static
+    public function removePlayer(Player $player): static
     {
         $this->player->removeElement($player);
 
