@@ -50,8 +50,7 @@ class SecurityController extends AbstractController
     #[Route('/auth/logout', name: 'logout', methods:'GET')]
     public function logout()
     {
-        // Lógica para cerrar sesión (en el frontend)
-        return new JsonResponse(['message' => 'Sesión cerrada']);
+        return $this->json(['message' => 'Sesión cerrada']);
     }
 
     #[Route('/auth/signup', name: 'create_user', methods:'POST')]
@@ -83,7 +82,6 @@ class SecurityController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $response = $serializer->serialize($user, 'json', ['groups' => 'user']); 
-        return new JsonResponse($response, 201, [], true); 
+        return $this->json($user, 200); 
     }
 }

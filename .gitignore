@@ -9,6 +9,7 @@
 /var/
 /vendor/
 /.vscode/
+/.vscode/sftp.json
 ###< symfony/framework-bundle ###
 
 ###> lexik/jwt-authentication-bundle ###

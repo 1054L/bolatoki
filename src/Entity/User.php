@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 //         new Patch(processor: UserPasswordHasher::class),
 //         new Delete(),
 //     ],
-//     normalizationContext: ['groups' => ['user:read']],
+//     normalizationContext: ['groups' => ['user']],
 //     denormalizationContext: ['groups' => ['user:create', 'user:update']],
 // )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -41,22 +41,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?string $username = null;
 
     #[ORM\Column(nullable: false)]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?int $type = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private array $roles = [];
 
     /**
@@ -70,23 +70,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $plainPassword = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?int $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?string $surname = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    #[Groups(['user:read'])]
+    #[Groups(['user'])]
     private ?Player $player = null;
 
     public function getId(): ?int
