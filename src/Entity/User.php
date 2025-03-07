@@ -85,6 +85,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['user'])]
     private ?string $surname = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['user'])]
+    private ?string $token = null;
+
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     #[Groups(['user'])]
     private ?Player $player = null;
@@ -231,6 +235,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSurname(string $surname): static
     {
         $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }
