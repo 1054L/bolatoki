@@ -21,18 +21,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ApiResource(
-    operations: [
-        new GetCollection(),
-        new Post(processor: UserPasswordHasher::class, validationContext: ['groups' => ['Default', 'user:create']]),
-        new Get(),
-        new Put(processor: UserPasswordHasher::class),
-        new Patch(processor: UserPasswordHasher::class),
-        new Delete(),
-    ],
-    normalizationContext: ['groups' => ['user']],
-    denormalizationContext: ['groups' => ['user:create', 'user:update']],
-)]
+// #[ApiResource(
+//     operations: [
+//         new GetCollection(),
+//         new Post(processor: UserPasswordHasher::class, validationContext: ['groups' => ['Default', 'user:create']]),
+//         new Get(),
+//         new Put(processor: UserPasswordHasher::class),
+//         new Patch(processor: UserPasswordHasher::class),
+//         new Delete(),
+//     ],
+//     normalizationContext: ['groups' => ['user']],
+//     denormalizationContext: ['groups' => ['user:create', 'user:update']],
+// )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity('username')]
