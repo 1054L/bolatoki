@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/auth/login', name: 'login', methods:'POST', defaults: ['api_platform' => false])]
-    public function login(Request $request, JWTTokenManagerInterface $jwtManager): JsonResponse
+    public function login(Request $request, EntityManagerInterface $entityManager, JWTTokenManagerInterface $jwtManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -43,7 +43,10 @@ class SecurityController extends AbstractController
         }
 
         $token = $jwtManager->create($user);
-        // return new JsonResponse(['token' => $token]);
+        $user->setToken($token);
+        
+        $entityManager->persist($user);
+        $entityManager->flush();
         return $this->json(['token' => $token]);
     }
 
