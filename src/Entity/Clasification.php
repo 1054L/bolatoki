@@ -16,7 +16,7 @@ class Clasification //Ignorar, en realidad se puede borrar!!
     private ?int $id = null;
 
     #[ORM\OneToOne(inversedBy: 'clasification', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?championship $championship = null;
 
     /**

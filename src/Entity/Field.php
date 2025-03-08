@@ -6,7 +6,9 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\FieldRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 
 #[ApiResource()]
 #[ORM\Entity(repositoryClass: FieldRepository::class)]
@@ -20,14 +22,47 @@ class Field
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $location = null;
-
     /**
      * @var Collection<int, Game>
      */
     #[ORM\OneToMany(targetEntity: Game::class, mappedBy: 'field')]
     private Collection $games;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lat = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $lng = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $images = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?bool $isCovered = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $maintenance = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $cp = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $province = null;
+
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
     public function __construct()
     {
@@ -47,18 +82,6 @@ class Field
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?string $location): static
-    {
-        $this->location = $location;
 
         return $this;
     }
@@ -89,6 +112,150 @@ class Field
                 $game->setField(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLat(): ?string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?string $lat): static
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?string
+    {
+        return $this->lng;
+    }
+
+    public function setLng(?string $lng): static
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImages(): ?string
+    {
+        return $this->images;
+    }
+
+    public function setImages(?string $images): static
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function isCovered(): ?bool
+    {
+        return $this->isCovered;
+    }
+
+    public function setIsCovered(bool $isCovered): static
+    {
+        $this->isCovered = $isCovered;
+
+        return $this;
+    }
+
+    public function getMaintenance(): ?string
+    {
+        return $this->maintenance;
+    }
+
+    public function setMaintenance(?string $maintenance): static
+    {
+        $this->maintenance = $maintenance;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCp(): ?string
+    {
+        return $this->cp;
+    }
+
+    public function setCp(?string $cp): static
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getProvince(): ?string
+    {
+        return $this->province;
+    }
+
+    public function setProvince(?string $province): static
+    {
+        $this->province = $province;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): static
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

@@ -60,6 +60,9 @@ class Player
     #[ORM\ManyToMany(targetEntity: Clasification::class, mappedBy: 'player')]
     private Collection $clasifications;
 
+    #[ORM\Column]
+    private ?bool $isFederated = null;
+
     public function __construct()
     {
         $this->stakes = new ArrayCollection();
@@ -251,6 +254,18 @@ class Player
         if ($this->clasifications->removeElement($clasification)) {
             $clasification->removePlayer($this);
         }
+
+        return $this;
+    }
+
+    public function isFederated(): ?bool
+    {
+        return $this->isFederated;
+    }
+
+    public function setIsFederated(bool $isFederated): static
+    {
+        $this->isFederated = $isFederated;
 
         return $this;
     }

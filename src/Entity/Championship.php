@@ -29,7 +29,7 @@ class Championship
     /**
      * @var Collection<int, TotalPlayerChampionship>
      */
-    #[ORM\OneToMany(targetEntity: TotalPlayerChampionship::class, mappedBy: 'championships')]
+    #[ORM\OneToMany(targetEntity: TotalPlayerChampionship::class, mappedBy: 'championship')]
     private Collection $totalPlayerChampionships;
 
     #[ORM\OneToOne(mappedBy: 'championship', cascade: ['persist', 'remove'])]

@@ -1,6 +1,6 @@
 nelmio_cors:
     defaults:
-        allow_origin: ['https://bolatoki.bolatoki.eus']
+        allow_origin: ['https://bolatoki.bolatoki.eus', 'https://pruebas.bolatoki.eus']
         allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
         allow_headers: ['Content-Type', 'Authorization']
         expose_headers: ['Link']
