@@ -22,6 +22,7 @@ class GameRepository extends ServiceEntityRepository
             ->where('g.date >= :today')
             ->setParameter('today', new \DateTime('today'))
             ->orderBy('g.date', 'ASC')
+            ->orderBy('g.id', 'ASC')
             ->getQuery()
             ->getResult();
     }

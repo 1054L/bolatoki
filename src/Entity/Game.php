@@ -43,6 +43,7 @@ class Game
      */
     #[ORM\OneToMany(targetEntity: Stake::class, mappedBy: 'game', fetch: 'EAGER')]
     #[Groups(['game:read', 'game:write'])]
+    #[\Symfony\Component\Serializer\Annotation\MaxDepth(1)]
     private Collection $stakes;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
