@@ -16,6 +16,16 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
+    public function findFromToday(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.date >= :today')
+            ->setParameter('today', new \DateTime('today'))
+            ->orderBy('g.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Game[] Returns an array of Game objects
     //     */

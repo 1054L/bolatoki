@@ -10,9 +10,11 @@ security:
                 class: App\Entity\User
                 property: username
     access_control:
+        - { path: ^/api/publicgames, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI docs
         - { path: ^/auth, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
     firewalls:
         api:
@@ -23,10 +25,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            stateless: true
-            jwt: true
-            provider: app_user_provider
+        # main:
+        #     stateless: true
+        #     jwt: true
+        #     provider: app_user_provider
             # json_login: false
             # json_login:
             #     check_path: auth # The name in routes.yaml is enough for mapping

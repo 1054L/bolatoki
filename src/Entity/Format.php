@@ -6,26 +6,34 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\FormatRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['game:read']]
+)]
 #[ORM\Entity(repositoryClass: FormatRepository::class)]
 class Format
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['game:read'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?bool $testrun = null;
 
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $numRuns = null;
 
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?bool $removeMinor = null;
 
     /**

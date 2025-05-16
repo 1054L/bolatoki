@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource()]
 #[ORM\Entity(repositoryClass: FieldRepository::class)]
@@ -17,9 +18,11 @@ class Field
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['game:read'])]
     private ?string $name = null;
 
     /**
@@ -29,18 +32,22 @@ class Field
     private Collection $games;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $lat = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $lng = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $images = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -50,18 +57,23 @@ class Field
     private ?string $maintenance = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $address = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $cp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $city = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $province = null;
 
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?bool $isActive = null;
 
     public function __construct()

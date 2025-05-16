@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
         $this->validator = $validator;
     }
 
-    #[Route('/auth/login', name: 'login', methods:'POST', defaults: ['api_platform' => false])]
+    #[Route('/auth/login', name: 'login', methods:['POST', 'OPTIONS'], defaults: ['api_platform' => false])]
     public function login(Request $request, EntityManagerInterface $entityManager, JWTTokenManagerInterface $jwtManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

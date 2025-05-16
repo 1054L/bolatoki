@@ -9,36 +9,46 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['game:read']],
+    denormalizationContext: ['groups' => ['game:write']]
+)]
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['game:read', 'game:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['game:read', 'game:write'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['game:read', 'game:write'])]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'games')]
+    #[ORM\ManyToOne(inversedBy: 'games', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
     #[ApiProperty(iris: ["https://schema.org/id"])]
+    #[Groups(['game:read', 'game:write'])]
     private ?Format $format = null;
 
     /**
      * @var Collection<int, Stake>
      */
-    #[ORM\OneToMany(targetEntity: Stake::class, mappedBy: 'game')]
+    #[ORM\OneToMany(targetEntity: Stake::class, mappedBy: 'game', fetch: 'EAGER')]
+    #[Groups(['game:read', 'game:write'])]
     private Collection $stakes;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
     #[ApiProperty(iris: ["https://schema.org/id"])]
+    #[Groups(['game:read', 'game:write'])]
     private ?Field $field = null;
 
     /**
@@ -46,7 +56,8 @@ class Game
      */
     #[ORM\ManyToMany(targetEntity: Championship::class, inversedBy: 'games')]
     #[ApiProperty(iris: ["https://schema.org/id"])]
-    private Collection $championships;
+    #[Groups(['game:read', 'game:write'])]
+    private ?Collection $championships;
 
     public function __construct()
     {

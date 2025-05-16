@@ -6,48 +6,65 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\StakeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['game:read']]
+)]
 #[ORM\Entity(repositoryClass: StakeRepository::class)]
 class Stake
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runTest = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runOne = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runTwo = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runThree = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runFour = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runFive = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runSix = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runSeven = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $runEight = null;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    #[Groups(['game:read'])]
     private ?int $total = null;
 
-    #[ORM\ManyToOne(inversedBy: 'stakes')]
+    #[ORM\ManyToOne(inversedBy: 'stakes', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['game:read'])]
+    #[MaxDepth(1)]
     private ?Player $player = null;
 
     #[ORM\ManyToOne(inversedBy: 'stakes')]

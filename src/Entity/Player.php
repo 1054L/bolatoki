@@ -8,7 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 #[ApiResource()]
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
 class Player
@@ -16,19 +17,19 @@ class Player
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['game:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['game:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['game:read'])]
     private ?string $surname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthdate = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $gender = null;
@@ -60,8 +61,9 @@ class Player
     #[ORM\ManyToMany(targetEntity: Clasification::class, mappedBy: 'player')]
     private Collection $clasifications;
 
-    #[ORM\Column]
-    private ?bool $isFederated = null;
+    #[ORM\Column(type: 'boolean', nullable: false)]
+    #[Groups(['player:write', 'player:read'])]
+    private bool $federated;
 
     public function __construct()
     {
@@ -107,18 +109,6 @@ class Player
     public function setBirthdate(?\DateTimeInterface $birthdate): static
     {
         $this->birthdate = $birthdate;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -260,12 +250,12 @@ class Player
 
     public function isFederated(): ?bool
     {
-        return $this->isFederated;
+        return $this->federated;
     }
 
-    public function setIsFederated(bool $isFederated): static
+    public function setFederated(bool $federated): static
     {
-        $this->isFederated = $isFederated;
+        $this->federated = $federated;
 
         return $this;
     }

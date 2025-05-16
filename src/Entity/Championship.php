@@ -7,34 +7,46 @@ use App\Repository\ChampionshipRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['championship:read']],
+    denormalizationContext: ['groups' => ['championship:write']]
+)]
 #[ORM\Entity(repositoryClass: ChampionshipRepository::class)]
 class Championship
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['championship:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['championship:read', 'championship:write'])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Game>
      */
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'championship')]
-    private Collection $games;
+    #[Groups(['championship:read'])]
+    #[MaxDepth(1)]
+    private ?Collection $games = null;
 
     /**
      * @var Collection<int, TotalPlayerChampionship>
      */
     #[ORM\OneToMany(targetEntity: TotalPlayerChampionship::class, mappedBy: 'championship')]
-    private Collection $totalPlayerChampionships;
+    private ?Collection $totalPlayerChampionships;
 
     #[ORM\OneToOne(mappedBy: 'championship', cascade: ['persist', 'remove'])]
     private ?Clasification $clasification = null;
 
+    /**
+     * @Groups({"championship:read"})
+     */
     #[ORM\ManyToOne]
     private ?Pointformat $pointformat = null;
 
