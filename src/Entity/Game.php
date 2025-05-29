@@ -9,7 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\MaxDepth;
 
 #[ApiResource(
     normalizationContext: ['groups' => ['game:read']],
@@ -28,11 +29,12 @@ class Game
     #[Groups(['game:read', 'game:write'])]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['game:read', 'game:write'])]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'games', fetch: 'EAGER')]
+    // #[ORM\ManyToOne(inversedBy: 'games', fetch: 'EAGER')]
+    #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
     #[ApiProperty(iris: ["https://schema.org/id"])]
     #[Groups(['game:read', 'game:write'])]
@@ -41,15 +43,18 @@ class Game
     /**
      * @var Collection<int, Stake>
      */
-    #[ORM\OneToMany(targetEntity: Stake::class, mappedBy: 'game', fetch: 'EAGER')]
+    // #[ORM\OneToMany(targetEntity: Stake::class, mappedBy: 'game', fetch: 'EAGER')]
+    #[ORM\OneToMany(targetEntity: Stake::class, mappedBy: 'game')]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     #[Groups(['game:read', 'game:write'])]
-    #[\Symfony\Component\Serializer\Annotation\MaxDepth(1)]
+    #[MaxDepth(1)]
     private Collection $stakes;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
     #[ApiProperty(iris: ["https://schema.org/id"])]
     #[Groups(['game:read', 'game:write'])]
+    #[MaxDepth(1)]
     private ?Field $field = null;
 
     /**
@@ -58,6 +63,7 @@ class Game
     #[ORM\ManyToMany(targetEntity: Championship::class, inversedBy: 'games')]
     #[ApiProperty(iris: ["https://schema.org/id"])]
     #[Groups(['game:read', 'game:write'])]
+    #[MaxDepth(1)]
     private ?Collection $championships;
 
     public function __construct()
@@ -152,24 +158,26 @@ class Game
     /**
      * @return Collection<int, Championship>
      */
-    public function getChampionship(): Collection
+    public function getChampionships(): Collection
     {
         return $this->championships;
     }
 
-    public function addChampionship(Championship $championships): static
+    public function addChampionship(Championship $championship): static
     {
-        if (!$this->championships->contains($championships)) {
-            $this->championships->add($championships);
+        if (!$this->championships->contains($championship)) {
+            $this->championships->add($championship);
+            $championship->addGame($this);
         }
 
         return $this;
     }
 
-    public function removeChampionship(Championship $championships): static
+    public function removeChampionship(Championship $championship): static
     {
-        $this->championships->removeElement($championships);
-
+        if ($this->championships->removeElement($championship)) {
+            $championship->removeGame($this);
+        }
         return $this;
     }
 }

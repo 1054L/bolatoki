@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Championship;
+use App\Entity\Player;
 use App\Entity\TotalPlayerChampionship;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,9 +13,29 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TotalPlayerChampionshipRepository extends ServiceEntityRepository
 {
+    // @ORM\ManyToOne(targetEntity=Player::class)
+    private $player;
+
+    // @ORM\ManyToOne(targetEntity=Championship::class)
+    private $championship;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, TotalPlayerChampionship::class);
+    }
+
+    public function calculateTotalForPlayerInChampionship(Player $player, Championship $championship): int
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('SUM(s.total)')
+            ->from('App\Entity\Stake', 's')
+            ->join('s.game', 'g')
+            ->join('g.championships', 'c')  // Asegúrate que Game tiene championships
+            ->where('s.player = :player')
+            ->andWhere('c = :championship')
+            ->setParameter('player', $player)
+            ->setParameter('championship', $championship);
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
     //    /**

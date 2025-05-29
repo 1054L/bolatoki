@@ -32,9 +32,11 @@ class Player
     private ?\DateTimeInterface $birthdate = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['game:read'])]
     private ?int $gender = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:read'])]
     private ?string $province = null;
 
     #[ORM\ManyToOne(inversedBy: 'players')]

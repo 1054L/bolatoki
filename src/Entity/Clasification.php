@@ -6,6 +6,7 @@ use App\Repository\ClasificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\MaxDepth;
 
 #[ORM\Entity(repositoryClass: ClasificationRepository::class)]
 class Clasification //Ignorar, en realidad se puede borrar!!
@@ -17,7 +18,8 @@ class Clasification //Ignorar, en realidad se puede borrar!!
 
     #[ORM\OneToOne(inversedBy: 'clasification', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)]
-    private ?championship $championship = null;
+    #[MaxDepth(1)]
+    private ?Championship $championship = null;
 
     /**
      * @var Collection<int, Player>

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ChampionshipRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,28 +21,32 @@ class Championship
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['championship:read'])]
+    #[Groups(['championship:read', 'game:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['championship:read', 'championship:write'])]
+    #[Groups(['championship:read', 'championship:write', 'game:read'])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Game>
      */
-    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'championship')]
+    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'championships')]
     #[Groups(['championship:read'])]
     #[MaxDepth(1)]
     private ?Collection $games = null;
-
+    
     /**
      * @var Collection<int, TotalPlayerChampionship>
      */
     #[ORM\OneToMany(targetEntity: TotalPlayerChampionship::class, mappedBy: 'championship')]
+    #[Groups(['championship:read', 'game:read'])]
+    #[ApiProperty(iris: ["https://schema.org/id"])]
+    #[MaxDepth(1)]
     private ?Collection $totalPlayerChampionships;
 
     #[ORM\OneToOne(mappedBy: 'championship', cascade: ['persist', 'remove'])]
+    #[MaxDepth(1)]
     private ?Clasification $clasification = null;
 
     /**

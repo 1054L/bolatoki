@@ -3,6 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\StakeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +16,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ApiResource(
-    normalizationContext: ['groups' => ['game:read']]
+    normalizationContext: ['groups' => ['game:read']],
+    operations: [
+        new GetCollection(order: ['position' => 'ASC']),
+        new Get(),
+        new Post(),
+        new Patch(),
+        new Put(),
+        new Delete()
+    ]
 )]
 #[ORM\Entity(repositoryClass: StakeRepository::class)]
 class Stake
@@ -70,6 +84,10 @@ class Stake
     #[ORM\ManyToOne(inversedBy: 'stakes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Game $game = null;
+
+    #[ORM\Column(type: "integer")]
+    #[Groups(['game:read'])]
+    private ?int $position = null;
 
     public function getId(): ?int
     {
@@ -217,6 +235,17 @@ class Stake
     {
         $this->game = $game;
 
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
         return $this;
     }
 }
