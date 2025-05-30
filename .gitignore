@@ -15,6 +15,7 @@
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*
 ###< lexik/jwt-authentication-bundle ###
+/config/packages/nelmio_cors.yaml
 
 /bolatoki
 /bolatoki.pub
