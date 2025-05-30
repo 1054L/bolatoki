@@ -20,7 +20,6 @@ final class Version20250529074415 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE player DROP category');
         $this->addSql('ALTER TABLE stake CHANGE position position INT NOT NULL');
         $this->addSql('ALTER TABLE user CHANGE token token VARCHAR(255) NOT NULL');
     }
@@ -28,7 +27,6 @@ final class Version20250529074415 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE player ADD category VARCHAR(100) DEFAULT NULL');
         $this->addSql('ALTER TABLE stake CHANGE position position INT DEFAULT NULL');
         $this->addSql('ALTER TABLE `user` CHANGE token token TEXT DEFAULT NULL');
     }
