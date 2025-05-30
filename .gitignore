@@ -13,7 +13,7 @@
 ###< symfony/framework-bundle ###
 
 ###> lexik/jwt-authentication-bundle ###
-/config/jwt/*.pem
+/src/config/jwt/*
 ###< lexik/jwt-authentication-bundle ###
 
 /bolatoki
