@@ -21,7 +21,7 @@ class GameController
     #[Route('/api/publicgames', name: 'api_public_games', methods: ['GET'])]
     public function __invoke(Request $request, SerializerInterface $serializer): JsonResponse
     {
-        $games = $this->gameRepository->findFromToday();
+        $games = $this->gameRepository->findGroupedByDate();
         $json = $serializer->serialize($games, 'json', ['groups' => ['game:read']]);
 
         return new JsonResponse($json, 200, [], true);

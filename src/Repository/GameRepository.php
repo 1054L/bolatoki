@@ -16,16 +16,49 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    public function findFromToday(): array
+    // public function findFromToday(): array
+    // {
+    //     return $this->createQueryBuilder('g')
+    //         ->where('g.date >= :today')
+    //         ->setParameter('today', new \DateTime('today'))
+    //         ->orderBy('g.date', 'ASC')
+    //         ->orderBy('g.id', 'ASC')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
+    public function findGroupedByDate(): array
     {
-        return $this->createQueryBuilder('g')
-            ->where('g.date >= :today')
-            ->setParameter('today', new \DateTime('today'))
+        $today = new \DateTimeImmutable('today');
+        $tomorrow = $today->modify('+1 day');
+
+        // Query builder para todos los juegos
+        $qb = $this->createQueryBuilder('g')
             ->orderBy('g.date', 'ASC')
-            ->orderBy('g.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('g.id', 'ASC');
+
+        $allGames = $qb->getQuery()->getResult();
+
+        $result = [
+            'past' => [],
+            'today' => [],
+            'future' => []
+        ];
+
+        foreach ($allGames as $game) {
+            if ($game->getDate() < $today) {
+                $result['past'][] = $game;
+            } elseif ($game->getDate() >= $today && $game->getDate() < $tomorrow) {
+                $result['today'][] = $game;
+            } else {
+                $result['future'][] = $game;
+            }
+        }
+        $result['past'] = array_slice($result['past'], -1);
+
+        return $result;
     }
+
 
     //    /**
     //     * @return Game[] Returns an array of Game objects

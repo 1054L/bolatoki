@@ -33,6 +33,7 @@ class Championship
      */
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'championships')]
     #[Groups(['championship:read'])]
+    #[ApiProperty(iris: ["https://schema.org/id"])]
     #[MaxDepth(1)]
     private ?Collection $games = null;
     

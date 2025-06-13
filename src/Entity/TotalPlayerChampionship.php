@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TotalPlayerChampionshipRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
-    normalizationContext: ['groups' => ['TotalPlayerChampionshipRepository:read']],
+    normalizationContext: ['groups' => ['TotalPlayerChampionshipRepository:read', 'championship:read']],
     denormalizationContext: ['groups' => ['TotalPlayerChampionshipRepository:write']]
 )]
 #[ORM\Entity(repositoryClass: TotalPlayerChampionshipRepository::class)]
@@ -27,6 +29,8 @@ class TotalPlayerChampionship
     #[ORM\ManyToOne(inversedBy: 'totalPlayerChampionships')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['championship:read', 'game:read'])]
+    #[ApiProperty(iris: ["https://schema.org/id"])]
+    #[MaxDepth(1)]
     private ?Player $player = null;
 
     #[ORM\ManyToOne(inversedBy: 'totalPlayerChampionships')]

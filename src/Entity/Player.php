@@ -17,26 +17,26 @@ class Player
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?string $surname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthdate = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?int $gender = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?string $province = null;
 
     #[ORM\ManyToOne(inversedBy: 'players')]

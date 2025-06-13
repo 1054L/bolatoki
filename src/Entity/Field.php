@@ -18,11 +18,11 @@ class Field
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['game:read'])]
+    #[Groups(['game:read', 'championship:read'])]
     private ?string $name = null;
 
     /**
