@@ -1,15 +1,15 @@
 nelmio_cors:
     defaults:
-        allow_origin: ['*']
-        # allow_origin: ['https://bolatoki.bolatoki.eus', 'https://app.bolatoki.eus', 'https://bolatoki.eus', 'https://*.bolatoki.eus']
+        # allow_origin: ['*']
+        allow_origin: ['https://bolatoki.bolatoki.eus', 'https://app.bolatoki.eus', 'https://bolatoki.eus', 'https://*.bolatoki.eus']
         allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
         allow_headers: ['Content-Type', 'Authorization']
         expose_headers: ['Link']
         max_age: 3600
     paths:
         '^/api/':  # Aplica CORS solo para la ruta /api/
-            allow_origin: ['*']
-            # allow_origin: ['https://bolatoki.bolatoki.eus', 'https://app.bolatoki.eus', 'https://bolatoki.eus', 'https://*.bolatoki.eus']
+            # allow_origin: ['*']
+            allow_origin: ['https://bolatoki.bolatoki.eus', 'https://app.bolatoki.eus', 'https://bolatoki.eus', 'https://*.bolatoki.eus']
             allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
             allow_headers: ['Authorization', 'Content-Type']
             max_age: 3600
