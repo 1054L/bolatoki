@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    normalizationContext: ['groups' => ['game:read']]
+    normalizationContext: ['groups' => ['format:read', 'game:read']],
+    denormalizationContext: ['groups' => ['format:write']]
 )]
 #[ORM\Entity(repositoryClass: FormatRepository::class)]
 class Format

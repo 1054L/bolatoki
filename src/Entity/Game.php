@@ -42,7 +42,6 @@ class Game
     // #[ORM\ManyToOne(inversedBy: 'games', fetch: 'EAGER')]
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
-    #[ApiProperty(iris: ["https://schema.org/id"])]
     #[Groups(['game:read', 'game:write', 'game:list'])]
     #[MaxDepth(1)]
     private ?Format $format = null;
@@ -59,7 +58,6 @@ class Game
 
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
-    #[ApiProperty(iris: ["https://schema.org/id"])]
     #[Groups(['game:read', 'game:write', 'game:list', 'championship:read'])]
     #[MaxDepth(1)]
     private ?Field $field = null;
@@ -68,7 +66,6 @@ class Game
      * @var Collection<int, Championship>
      */
     #[ORM\ManyToMany(targetEntity: Championship::class, inversedBy: 'games')]
-    #[ApiProperty(iris: ["https://schema.org/id"])]
     #[Groups(['game:read', 'game:list', 'game:write'])]
     #[MaxDepth(1)]
     private ?Collection $championships;

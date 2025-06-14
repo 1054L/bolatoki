@@ -13,7 +13,9 @@ api_platform:
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
         attributes:
-            # normalization_context:
-            #     groups: ['read']
-            # denormalization_context:
-            #     groups: ['write']
+            normalization_context:
+                enable_max_depth: true
+                # groups: ['read']
+            denormalization_context:
+                enable_max_depth: true
+                # groups: ['write']

@@ -56,6 +56,11 @@ class Championship
     #[ORM\ManyToOne]
     private ?Pointformat $pointformat = null;
 
+    #[ORM\ManyToOne(targetEntity: Mode::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['championship:read', 'championship:write'])]
+    private ?Mode $mode = null;
+
     public function __construct()
     {
         $this->games = new ArrayCollection();
@@ -161,6 +166,18 @@ class Championship
     public function setPointformat(?Pointformat $pointformat): static
     {
         $this->pointformat = $pointformat;
+
+        return $this;
+    }
+
+    public function getMode(): ?Mode
+    {
+        return $this->mode;
+    }
+
+    public function setMode(?Mode $mode): static
+    {
+        $this->mode = $mode;
 
         return $this;
     }

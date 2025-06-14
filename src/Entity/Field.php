@@ -11,7 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ApiResource()]
+#[ApiResource(
+    normalizationContext: ['groups' => ['field:read', 'game:read']],
+    denormalizationContext: ['groups' => ['field:write']]
+)]
 #[ORM\Entity(repositoryClass: FieldRepository::class)]
 class Field
 {
@@ -75,6 +78,11 @@ class Field
     #[ORM\Column]
     #[Groups(['game:read'])]
     private ?bool $isActive = null;
+    
+    #[ORM\ManyToOne(targetEntity: Mode::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['field:read', 'field:write'])]
+    private ?Mode $mode = null;
 
     public function __construct()
     {
@@ -271,4 +279,17 @@ class Field
 
         return $this;
     }
+
+    public function getMode(): ?Mode
+    {
+        return $this->mode;
+    }
+
+    public function setMode(?Mode $mode): static
+    {
+        $this->mode = $mode;
+
+        return $this;
+    }
+
 }
