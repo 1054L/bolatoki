@@ -55,6 +55,7 @@ class GameRepository extends ServiceEntityRepository
             }
         }
         // $result['past'] = array_slice($result['past'], -1);
+        $result['past'] = array_reverse($result['past']);
 
         return $result;
     }
