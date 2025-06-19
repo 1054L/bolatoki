@@ -54,7 +54,7 @@ class GameRepository extends ServiceEntityRepository
                 $result['future'][] = $game;
             }
         }
-        $result['past'] = array_slice($result['past'], -1);
+        // $result['past'] = array_slice($result['past'], -1);
 
         return $result;
     }
