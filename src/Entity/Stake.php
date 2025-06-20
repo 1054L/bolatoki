@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -24,6 +26,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
         new Patch(),
         new Put(),
         new Delete()
+    ]
+)]
+#[ApiFilter(
+    SearchFilter::class,
+    properties: [
+        'game'   => 'exact',
     ]
 )]
 #[ORM\Entity(repositoryClass: StakeRepository::class)]
@@ -81,8 +89,8 @@ class Stake
     #[MaxDepth(1)]
     private ?Player $player = null;
 
-    #[ORM\ManyToOne(inversedBy: 'stakes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'stakes', targetEntity: Game::class)]
+    #[ORM\JoinColumn(name: 'game_id', referencedColumnName: 'id', nullable: false)]
     private ?Game $game = null;
 
     #[ORM\Column(type: "integer")]
