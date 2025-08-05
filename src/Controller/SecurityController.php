@@ -6,6 +6,8 @@ use ApiPlatform\OpenApi\Model\Response;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,12 +25,14 @@ class SecurityController extends AbstractController
     private $entityManager;
     private $passwordHasher;
     private $validator;
+    private $log;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, ValidatorInterface $validator)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, ValidatorInterface $validator, LoggerInterface $log)
     {
         $this->entityManager = $entityManager;
         $this->passwordHasher = $passwordHasher;
         $this->validator = $validator;
+        $this->log = $log;
     }
 
     #[Route('/auth/login', name: 'login', methods:['POST', 'OPTIONS'], defaults: ['api_platform' => false])]
@@ -37,6 +41,7 @@ class SecurityController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $data['username']]);
+        $this->log->info('Login attempt for user: ' . $data['username']);
 
         if (!$user || !$this->passwordHasher->isPasswordValid($user, $data['password'])) {
             return new JsonResponse(['error' => 'Credenciales inválidas'], 401);
@@ -47,7 +52,7 @@ class SecurityController extends AbstractController
         
         $entityManager->persist($user);
         $entityManager->flush();
-        return $this->json(['token' => $token]);
+        return $this->json(['token' => $token, 'user' => $user], HttpFoundationResponse::HTTP_OK, [], ['groups' => ['user:read']]);
     }
 
     #[Route('/auth/logout', name: 'logout', methods:'GET')]
