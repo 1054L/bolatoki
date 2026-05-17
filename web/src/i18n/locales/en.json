@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "championships": "Championships",
+    "players": "Players",
+    "clubs": "Clubs",
+    "games": "Contests",
+    "bolatokis": "Facilities",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "active_championships": "Active Championships",
+    "registered_players": "Registered Players",
+    "games_today": "Contests Today",
+    "recent_activity": "Recent Activity"
+  },
+  "common": {
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "actions": "Actions",
+    "loading": "Loading..."
+  }
+}

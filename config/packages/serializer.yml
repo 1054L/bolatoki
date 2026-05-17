@@ -1,5 +1,0 @@
-framework:
-    serializer:
-        enable_annotations: true
-        default_context:
-            enable_max_depth: true

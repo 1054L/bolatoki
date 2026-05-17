@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "dashboard": "Aginte-panela",
+    "championships": "Txapelketak",
+    "players": "Jokalariak",
+    "clubs": "Klubak",
+    "games": "Lehiaketak",
+    "bolatokis": "Bolatokiak",
+    "settings": "Ezarpenak"
+  },
+  "dashboard": {
+    "title": "Aginte-panela",
+    "active_championships": "Txapelketa Aktiboak",
+    "registered_players": "Erregistratutako Jokalariak",
+    "games_today": "Gaurko Lehiaketak",
+    "recent_activity": "Azken Jarduera"
+  },
+  "common": {
+    "edit": "Aldatu",
+    "save": "Gorde",
+    "cancel": "Utzi",
+    "delete": "Ezabatu",
+    "actions": "Ekintzak",
+    "loading": "Kargatzen..."
+  }
+}

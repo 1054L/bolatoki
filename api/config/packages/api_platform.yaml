@@ -1,0 +1,25 @@
+api_platform:
+    title: Bolatoki
+    version: 1.0.0
+    use_symfony_listeners: true
+    formats:
+        jsonld: ['application/ld+json']
+        json: ['application/json']
+        html: ['text/html']
+    patch_formats:
+        json: ['application/merge-patch+json']
+    error_formats:
+        json: ['application/problem+json', 'application/json']
+    defaults:
+        pagination_items_per_page: 1000
+        pagination_maximum_items_per_page: 1000
+        stateless: false
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+        attributes:
+            normalization_context:
+                enable_max_depth: true
+                # groups: ['read']
+            denormalization_context:
+                enable_max_depth: true
+                # groups: ['write']

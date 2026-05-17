@@ -1,0 +1,25 @@
+import { defineStore } from 'pinia';
+import api from '../api';
+
+export const usePointformatStore = defineStore('pointformat', {
+  state: () => ({
+    items: [],
+    loading: false,
+    error: null,
+  }),
+  actions: {
+    async fetchAll(force = false) {
+      if (this.items.length > 0 && !force) return;
+      
+      this.loading = true;
+      try {
+        const response = await api.get('/pointformats');
+        this.items = response.data;
+      } catch (err) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    }
+  }
+});

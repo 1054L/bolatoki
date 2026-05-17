@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "dashboard": "Panel de Control",
+    "championships": "Campeonatos",
+    "players": "Jugadores",
+    "clubs": "Clubes",
+    "games": "Concursos",
+    "bolatokis": "Bolatokis",
+    "settings": "Ajustes"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "active_championships": "Campeonatos Activos",
+    "registered_players": "Jugadores Registrados",
+    "games_today": "Concursos Hoy",
+    "recent_activity": "Actividad Reciente"
+  },
+  "common": {
+    "edit": "Editar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "actions": "Acciones",
+    "loading": "Cargando..."
+  }
+}

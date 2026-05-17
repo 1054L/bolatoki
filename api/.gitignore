@@ -1,0 +1,22 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env
+/.env.dev
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/.vscode/
+/.vscode/sftp.json
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*
+###< lexik/jwt-authentication-bundle ###
+/config/packages/nelmio_cors.yaml
+
+/bolatoki
+/bolatoki.pub
