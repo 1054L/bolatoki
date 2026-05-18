@@ -1,30 +1,30 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-apache
 
-# Install system dependencies
-RUN apk add --no-cache \
-    git \
-    unzip \
-    libpq-dev \
+RUN apt-get update && apt-get install -y \
+    default-libmysqlclient-dev \
     libzip-dev \
-    icu-dev
-
-# Install PHP extensions
-RUN docker-php-ext-install \
-    pdo_mysql \
+    libicu-dev \
     zip \
-    intl
+    unzip \
+    git \
+    && docker-php-ext-install pdo pdo_mysql zip intl
 
-# Get Composer
+RUN a2enmod rewrite
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-# Copy project files
 COPY . .
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html
+RUN composer install --no-scripts --no-interaction
 
-EXPOSE 9000
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+RUN sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
 
-CMD ["php-fpm"]
+RUN mkdir -p /var/www/html/var && chown -R www-data:www-data /var/www/html/var
+
+EXPOSE 80
+CMD ["apache2-foreground"]

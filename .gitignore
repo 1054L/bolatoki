@@ -8,5 +8,10 @@ api/.env.dev
 web/node_modules/
 web/dist/
 
-# Otros
+# Raíz
 *.sql
+api_output.json
+docker-compose.yml
+
+
+GHtoken
